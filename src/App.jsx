@@ -5,7 +5,7 @@ function App() {
   return (
     <div className={s.todo}>
       <div className={s.todo__sidebar}>
-        <List />
+        <List c="123" />
       </div>
       <div className={s.todo__tasks}></div>
     </div>
