@@ -1,7 +1,15 @@
 .list {
   margin-bottom: 30px;
+  &__add-btn {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   li {
-    padding: 10px 12px;
+    padding: 10px 8px;
     display: flex;
     align-items: center;
     cursor: pointer;

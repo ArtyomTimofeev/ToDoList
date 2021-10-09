@@ -1,5 +1,7 @@
 import './App.scss';
 import List from './components/List/List';
+import React from 'react';
+import AddList from './components/AddList/AddList';
 
 function App() {
   return (
@@ -38,7 +40,9 @@ function App() {
               name: 'Фильмы и сериалы',
             },
           ]}
+          isRemovable
         />
+        <AddList />
       </div>
       <div className="todo__tasks"></div>
     </div>
