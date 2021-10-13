@@ -2,6 +2,7 @@ import './App.scss';
 import List from './components/List/List';
 import React from 'react';
 import AddList from './components/AddList/AddList';
+import DB from './assets/db.json';
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
           ]}
           isRemovable
         />
-        <AddList />
+        <AddList colors={DB.colors} />
       </div>
       <div className="todo__tasks"></div>
     </div>

@@ -1,11 +1,16 @@
 import List from '../List/List';
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import './AddList.scss';
+import Badge from '../Badge/Badge';
 
-const AddList = () => {
+const AddList = (props) => {
+  const [visiblePopup, setVisiblePopup] = useState(false);
+  const [selectedColor, selectColor] = useState(props.colors[0].id);
+
   return (
     <div className="add-list">
       <List
+        onClick={() => setVisiblePopup(true)}
         items={[
           {
             className: 'list__add-btn',
@@ -37,7 +42,26 @@ const AddList = () => {
           },
         ]}
       />
-      <div className="add-list__popup"></div>
+      {visiblePopup && (
+        <div className="add-list__popup">
+          <input
+            className="field"
+            type="text"
+            placeholder="Название списка"
+          ></input>
+          <div className="add-list__popup-colors">
+            {props.colors.map((color) => (
+              <Badge
+                onClick={() => selectColor(color.id)}
+                color={color.name}
+                key={color.id}
+                className={selectedColor === color.id && 'active'}
+              />
+            ))}
+          </div>
+          <button className="button">Добавить</button>
+        </div>
+      )}
     </div>
   );
 };
