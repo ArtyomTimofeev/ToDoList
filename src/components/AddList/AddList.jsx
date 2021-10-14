@@ -2,10 +2,27 @@ import List from '../List/List';
 import React, { useState } from 'react';
 import './AddList.scss';
 import Badge from '../Badge/Badge';
+import closeSvg from '../../assets/img/close.svg';
+import DB from '../../assets/db.json';
 
 const AddList = (props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, selectColor] = useState(props.colors[0].id);
+  const [inputValue, setInputValue] = useState('');
+
+  const addListItem = () => {
+    if (!inputValue) {
+      alert('Введите название списка!');
+      return;
+    }
+    const color = props.colors.filter((c) => c.id === selectedColor)[0].name;
+    props.onAdd({
+      id: Math.random(),
+      name: inputValue,
+      color,
+    });
+    setInputValue('');
+  };
 
   return (
     <div className="add-list">
@@ -44,7 +61,17 @@ const AddList = (props) => {
       />
       {visiblePopup && (
         <div className="add-list__popup">
+          <img
+            onClick={() => {
+              setVisiblePopup(false);
+            }}
+            src={closeSvg}
+            alt="Close button"
+            className="add-list__popup-close-btn"
+          />
           <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
             className="field"
             type="text"
             placeholder="Название списка"
@@ -59,7 +86,9 @@ const AddList = (props) => {
               />
             ))}
           </div>
-          <button className="button">Добавить</button>
+          <button onClick={addListItem} className="button">
+            Добавить
+          </button>
         </div>
       )}
     </div>
