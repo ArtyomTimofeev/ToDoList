@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import './AddList.scss';
 import Badge from '../Badge/Badge';
 import closeSvg from '../../assets/img/close.svg';
-import DB from '../../assets/db.json';
 
 const AddList = (props) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -21,7 +20,14 @@ const AddList = (props) => {
       name: inputValue,
       color,
     });
+    onClose();
+  };
+
+  const onClose = () => {
+    setVisiblePopup(false);
     setInputValue('');
+    setVisiblePopup(false);
+    selectColor(props.colors[0].id);
   };
 
   return (
@@ -62,9 +68,7 @@ const AddList = (props) => {
       {visiblePopup && (
         <div className="add-list__popup">
           <img
-            onClick={() => {
-              setVisiblePopup(false);
-            }}
+            onClick={onClose}
             src={closeSvg}
             alt="Close button"
             className="add-list__popup-close-btn"
