@@ -1,33 +1,54 @@
-import List from '../List/List';
-import React, { useState } from 'react';
-import './AddList.scss';
-import Badge from '../Badge/Badge';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+import List from '../List';
+import Badge from '../Badge';
+
 import closeSvg from '../../assets/img/close.svg';
 
-const AddList = (props) => {
+import './AddList.scss';
+
+const AddList = ({ colors, onAdd }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const [selectedColor, selectColor] = useState(props.colors[0].id);
+  const [seletedColor, selectColor] = useState(3);
+  const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const addListItem = () => {
-    if (!inputValue) {
-      alert('Введите название списка!');
-      return;
+  useEffect(() => {
+    if (Array.isArray(colors)) {
+      selectColor(colors[0].id);
     }
-    const color = props.colors.filter((c) => c.id === selectedColor)[0].name;
-    props.onAdd({
-      id: Math.random(),
-      name: inputValue,
-      color,
-    });
-    onClose();
-  };
+  }, [colors]);
 
   const onClose = () => {
     setVisiblePopup(false);
     setInputValue('');
-    setVisiblePopup(false);
-    selectColor(props.colors[0].id);
+    selectColor(colors[0].id);
+  };
+
+  const addList = () => {
+    if (!inputValue) {
+      alert('Введите название списка');
+      return;
+    }
+    setIsLoading(true);
+    axios
+      .post('http://localhost:3001/lists', {
+        name: inputValue,
+        colorId: seletedColor
+      })
+      .then(({ data }) => {
+        const color = colors.filter(c => c.id === seletedColor)[0];
+        const listObj = { ...data, color, tasks: [] };
+        onAdd(listObj);
+        onClose();
+      })
+      .catch(() => {
+        alert('Ошибка при добавлении списка!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -36,11 +57,11 @@ const AddList = (props) => {
         onClick={() => setVisiblePopup(true)}
         items={[
           {
-            className: 'list__add-btn',
+            className: 'list__add-button',
             icon: (
               <svg
-                width="11"
-                height="11"
+                width="12"
+                height="12"
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +82,8 @@ const AddList = (props) => {
                 />
               </svg>
             ),
-            name: 'Добавить список',
-          },
+            name: 'Добавить список'
+          }
         ]}
       />
       {visiblePopup && (
@@ -73,29 +94,32 @@ const AddList = (props) => {
             alt="Close button"
             className="add-list__popup-close-btn"
           />
+
           <input
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={e => setInputValue(e.target.value)}
             className="field"
             type="text"
             placeholder="Название списка"
-          ></input>
+          />
+
           <div className="add-list__popup-colors">
-            {props.colors.map((color) => (
+            {colors.map(color => (
               <Badge
                 onClick={() => selectColor(color.id)}
-                color={color.name}
                 key={color.id}
-                className={selectedColor === color.id && 'active'}
+                color={color.name}
+                className={seletedColor === color.id && 'active'}
               />
             ))}
           </div>
-          <button onClick={addListItem} className="button">
-            Добавить
+          <button onClick={addList} className="button">
+            {isLoading ? 'Добавление...' : 'Добавить'}
           </button>
         </div>
       )}
     </div>
   );
 };
+
 export default AddList;

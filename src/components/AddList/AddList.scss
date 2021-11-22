@@ -1,39 +1,39 @@
 .add-list {
   &__popup {
-    width: 235px;
     height: 150px;
+    width: 240px;
     background: #ffffff;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     padding: 18px;
+    box-sizing: border-box;
     position: relative;
+    top: -25px;
+    left: 10px;
 
     .button {
       width: 100%;
       margin-top: 12px;
     }
+
     &-close-btn {
       position: absolute;
-      right: -7px;
-      top: -7px;
+      right: -8px;
+      top: -8px;
       cursor: pointer;
-      &:hover {
-        opacity: 0.8;
-      }
-      &:active {
-        opacity: 0.9;
-      }
     }
 
     &-colors {
       display: flex;
       justify-content: space-between;
       margin-top: 12px;
+
       .badge {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         cursor: pointer;
         border: 2px solid transparent;
+
         &.active {
           border: 2px solid #525252;
         }
