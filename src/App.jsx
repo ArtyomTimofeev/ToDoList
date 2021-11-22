@@ -181,7 +181,7 @@ function App() {
               />
             ))}
         </Route>
-        <Route path="/lists/:id">
+        <Route exact path="/lists/:id">
           {lists && activeItem && (
             <Tasks
               list={activeItem}
