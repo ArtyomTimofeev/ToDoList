@@ -10,13 +10,15 @@ function App() {
   const [activeItem, setActiveItem] = useState(null);
   let history = useHistory();
 
+  const JSON_API = 'https://react-to-do-list-test.herokuapp.com/api';
+
   useEffect(() => {
     axios
-      .get('http://localhost:3001/lists?_expand=color&_embed=tasks')
+      .get(`${JSON_API}/lists?_expand=color&_embed=tasks`)
       .then(({ data }) => {
         setLists(data);
       });
-    axios.get('http://localhost:3001/colors').then(({ data }) => {
+    axios.get(`${JSON_API}/colors`).then(({ data }) => {
       setColors(data);
     });
   }, []);
@@ -56,7 +58,7 @@ function App() {
     });
     setLists(newList);
     axios
-      .patch('http://localhost:3001/tasks/' + taskObj.id, {
+      .patch(`${JSON_API}/tasks/` + taskObj.id, {
         text: newTaskText,
       })
       .catch(() => {
@@ -73,7 +75,7 @@ function App() {
         return item;
       });
       setLists(newList);
-      axios.delete('http://localhost:3001/tasks/' + taskId).catch(() => {
+      axios.delete(`${JSON_API}/tasks/` + taskId).catch(() => {
         alert('Не удалось удалить задачу');
       });
     }
@@ -93,7 +95,7 @@ function App() {
     });
     setLists(newList);
     axios
-      .patch('http://localhost:3001/tasks/' + taskId, {
+      .patch(`${JSON_API}/tasks/` + taskId, {
         completed,
       })
       .catch(() => {
