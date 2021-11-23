@@ -27,7 +27,7 @@
     },
     {
       "name": "Спорт",
-      "colorId": 3,
+      "colorId": 6,
       "id": 6
     }
   ],
@@ -36,25 +36,25 @@
       "id": 1,
       "listId": 2,
       "text": "Изучить JavaScript",
-      "completed": false
+      "completed": true
     },
     {
       "id": 2,
       "listId": 2,
       "text": "Изучить паттерны проектирования",
-      "completed": false
+      "completed": true
     },
     {
       "id": 3,
       "listId": 2,
       "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
-      "completed": false
+      "completed": true
     },
     {
       "id": 4,
       "listId": 2,
       "text": "Redux (redux-observable, redux-saga)",
-      "completed": false
+      "completed": true
     },
     {
       "listId": 4,
@@ -67,6 +67,12 @@
       "text": "Продать авто",
       "completed": false,
       "id": 13
+    },
+    {
+      "listId": 3,
+      "text": "Области тьмы",
+      "completed": true,
+      "id": 14
     }
   ],
   "colors": [
